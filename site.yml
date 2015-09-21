@@ -1,0 +1,14 @@
+---
+- hosts: web
+  sudo: yes
+  gather_facts: no
+  tasks:
+  - name: Apache2のインストール
+    apt: pkg=apache2 state=present update_cache=yes
+
+  - name: /etc/apache2/conf-available/security.confの設定
+    template: src=security.conf.j2 dest=/etc/apache2/conf-available/security.conf
+
+  - name: Apache2の再起動
+    service: name=apache2 state=restarted
+
